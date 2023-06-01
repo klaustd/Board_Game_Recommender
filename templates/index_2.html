@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<head>
+<title>What Should We Play?</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<!-- Sliderbar files -->
+<link href="{{ url_for('static', filename='css/nouislider.css') }}" rel="stylesheet">
+<script src="{{ url_for('static', filename='js/nouislider.js') }}"></script>
+
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+</style>
+<style>
+  .slider-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Adds space below the slider container */
+  }
+
+  .slider-values {
+    margin: 10px;
+  }
+</style>
+<style>
+    .slider-round {
+        margin: 50px;
+    }
+
+    .slider-round .noUi-handle .noUi-touch-area {
+        border: 1px solid transparent;
+        position: absolute;
+        background: #2980b9;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+        width: auto;
+        height: auto;
+        border-radius: 9px;
+
+
+    }
+</style>
+<style>
+   /* Media queries */
+
+    /* Adjust styles for screens with a maximum width of 768px */
+    @media (max-width: 768px) {
+    .slider-container {
+      flex-direction: column;
+      margin-bottom: 10px;
+    }
+
+    .slider-values {
+      margin-left: 0;
+      margin-top: 10px;
+    }
+
+    .slider {
+      width: 100%;
+    }
+  }
+
+  /* Adjust styles for screens with a maximum width of 480px */
+  @media (max-width: 480px) {
+    .slider {
+      width: 90%;
+    }
+  }
+
+</style>
+
+<style>
+    select[name="dropdown"] {
+        margin: 0px 0; /* Adjust the margin as per your requirement */
+    }
+</style>
+<style>
+    .form-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+</style>
+<style>
+    .submit-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .dropdown-container {
+        flex-basis: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .submit-container {
+        flex-basis: 100%;
+        text-align: center;
+    }
+      .autofill-container {
+    flex-basis: 100%;
+    align-items: center; /* Adjust this property for vertical justification */
+    /* Other styles for the container */
+    height: 80%;
+    width: 10%;
+    border: 1px solid black;
+  }
+    /* Media query for narrow screens */
+    @media screen and (max-width: 480px) {
+        .dropdown-container,
+        .submit-container {
+            flex-basis: 100%;
+        }
+    }
+</style>
+<style>
+  /* Adjust text size inside the dropdown */
+  select {
+    font-size: 100%; /* Set the desired text size */
+  }
+
+  /* Adjust text size of dropdown options */
+  select option {
+    font-size: 100%; /* Set the desired text size */
+  }
+</style>
+
+<style>
+    .submit-container {
+    flex: 0;
+}
+</style>
+<style>
+  ::placeholder {
+    /* CSS properties for the placeholder text */
+    font-family: Arial, sans-serif;
+    font-size: 120%;
+    color: #999999;
+    /* Add more CSS properties as needed */
+  }
+</style>
+
+
+</head>
+<body class="w3-light-grey w3-content" style="max-width:1600px">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+  <div class="w3-container">
+    <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
+      <i class="fa fa-remove"></i>
+    </a>
+    <img src="{{url_for('static', filename='images/brand.png')}}" style="width:100%;" class="w3-round"><br><br>
+    <h4><b>Board Game Recommender</b></h4>
+    <p class="w3-text-grey">Recommendations using collaborative filtering</p>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#recommender" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>RECOMMENDER</a>
+    <a href="#suggestions" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-lightbulb-o fa-fw w3-margin-right"></i>SUGGESTIONS</a>
+    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>ABOUT</a>
+    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-envelope fa-fw w3-margin-right"></i>CONTACT</a>
+
+  </div>
+  <div class="w3-panel w3-large">
+      <a  href="https://github.com/klaustd/Public/tree/main/Board_Game_Recommender">
+          <i class="fa fa-github w3-hover-opacity"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/taylor-klaus-359865153/">
+          <i class="fa fa-linkedin w3-hover-opacity"></i>
+      </a>
+
+
+  </div>
+</nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px">
+
+  <!-- Header -->
+  <header id="recommender">
+    <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="w3-container">
+    <h1><b>START HERE</b></h1>
+        <p style="font-size:30px">Looking for Some Help? See SUGGESTIONS.</p>
+    <div class="w3-section w3-bottombar w3-padding-16">
+
+
+    </div>
+    </div>
+  </header>
+
+  <!-- First Photo Grid-->
+  <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form method="POST" action="/recommend_games">
+                        <div class="submit-row">
+                            <div class="dropdown-container">
+                              <select name="dropdown">
+                                <option value="option1" {% if selected_option == 'option1' %}selected{% endif %}>THEME AND MECHANICS (Find me games with similar themes and mechanics!)</option>
+
+                                <option value="option2"{% if selected_option == 'option2' %}selected{% endif %}>MECHANICS ONLY (I liked the way this game played, and the theme doesn't matter as much to me.)</option>
+
+                                <option value="option3"{% if selected_option == 'option3' %}selected{% endif %}>THEME ONLY (Who cares about mechanics as long as the theme is awesome?!)</option>
+
+                                <option value="option4"{% if selected_option == 'option4' %}selected{% endif %}>ANTI-RECOMMENDER (I know what I don't like!)</option>
+
+                              </select>
+                                <input type="text" id="tags" name="user_input", placeholder="Search Here">
+                            </div>
+                            <div class="submit-container">
+                                <input type="submit" value="Submit">
+                            </div>
+                        </div>
+
+
+                            <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"
+                                rel="stylesheet" type="text/css" />
+
+                            <br><hr><br>
+                          <div class="container">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <p style="font-size:120%">I Want at Least this many Players</p>
+                                    <p style="font-size:120%">I Want at Most this many Players</p>
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="player_num" name="player_num">
+                            <div id="values-slider" class="slider-round"></div>
+                            <p>&nbsp;</p>
+                          <div class="container">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <p style="font-size:120%">Oldest Game</p>
+                                    <p style="font-size:120%">Newest Game</p>
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="year_num" name="year_num">
+                            <div id="year-slider" class="slider-round"></div>
+                            <p>&nbsp;</p>
+
+                </form>
+
+            </div>
+            {% if data %}
+            <h4>You searched for {{ search_name }} using {{ rec_name }}!! Have fun!</h4>
+            {% for i in data %}
+                <div class="col-md-3" style="margin-top:30px">
+                    <div class="card">
+                        <div class="card-body">
+                            <img class="card-img-top" src={{i[1]}}>
+                            <p>Title: {{i[0]}}</p>
+                            <p>Year Published: {{i[2]}}</p>
+                            <p>Mfg Playtime (min): {{i[3]}}</p>
+                            <p>Min Players: {{i[4]}}</p>
+                            <p>Max Players: {{i[5]}}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% endif %}
+
+            {% if feedback %}
+            {% for i in feedback %}
+                <div class="w3-container" style="margin-top:5%">
+                    <div class="card">
+                        <div class="card-body">
+                            <p style="font-size:200%">It looks like "{{ search_name }}" couldn't be found. Try looking at the SUGGESTIONS section if you need some game names to start with.</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% endif %}
+
+            {% if error_message %}
+            {% for i in error_message %}
+                <div class="w3-container" style="margin-top:5%">
+                    <div class="card">
+                        <div class="card-body">
+                            <p style="font-size:200%">Uh oh...it looks like we have an issue..."{{ i }}" ... if you let me know what caused it I can try to fix it.</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    <div class="w3-section w3-bottombar w3-padding-16"></div>
+  </div>
+
+  <div class="container" id="suggestions">
+        <div class="row">
+            <div class="col-12">
+                <h2>SUGGESTIONS</h2>
+            </div>
+              <!-- Pricing Tables -->
+                <h4>If you are looking for some ideas, try out some of my personal favorites in the search field or for a game night:</h4>
+                <p></p>
+                <hr>
+                <h3>My Top 8 All Time</h3>
+                    {% if top_suggest %}
+                    {% for i in top_suggest %}
+                        <div class="col-md-3" style="margin-top:30px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img class="card-img-top" src={{i[1]}}>
+                                    <p>Title: {{i[0]}}</p>
+                                    <p>Year Published: {{i[2]}}</p>
+                                    <p>Mfg Playtime (min): {{i[3]}}</p>
+                                    <p>Min Players: {{i[4]}}</p>
+                                    <p>Max Players: {{i[5]}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+
+                <div class="w3-section w3-bottombar w3-padding-16"></div>
+                <h4>Two Player Games</h4>
+                {% if two_player_suggest %}
+                    {% for i in two_player_suggest %}
+                        <div class="col-md-3" style="margin-top:30px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img class="card-img-top" src={{i[1]}}>
+                                    <p>Title: {{i[0]}}</p>
+                                    <p>Year Published: {{i[2]}}</p>
+                                    <p>Mfg Playtime (min): {{i[3]}}</p>
+                                    <p>Min Players: {{i[4]}}</p>
+                                    <p>Max Players: {{i[5]}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                <div class="w3-section w3-bottombar w3-padding-16"></div>
+                <h4>Party Games</h4>
+                {% if party_suggest %}
+                    {% for i in party_suggest %}
+                        <div class="col-md-3" style="margin-top:30px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img class="card-img-top" src={{i[1]}}>
+                                    <p>Title: {{i[0]}}</p>
+                                    <p>Year Published: {{i[2]}}</p>
+                                    <p>Mfg Playtime (min): {{i[3]}}</p>
+                                    <p>Min Players: {{i[4]}}</p>
+                                    <p>Max Players: {{i[5]}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+            <div class="w3-section w3-bottombar w3-padding-16"></div>
+        </div>
+  </div>
+
+  <!-- Images of Me -->
+  <div class="w3-row-padding w3-padding-16" id="about">
+    <div class="w3-col m6">
+      <img src="/w3images/avatar_g.jpg" alt="Me" style="width:100%">
+    </div>
+    <div class="w3-col m6">
+      <img src="/w3images/me2.jpg" alt="Me" style="width:100%">
+    </div>
+  </div>
+
+  <div class="w3-container w3-padding-large" style="margin-bottom:32px">
+    <h4><b>About</b></h4>
+    <p style="font-size:20px">Why make something like this?<br><br>
+
+      I believe that there is a boardgame to be discovered out there for everyone, whether new to the hobby or a grizzled gamer. I wanted to make a tool that allowed people to discover boardgames to enjoy using a variety of methods.<br><br>
+
+      If you are interested in the data or code of the project see the<a href="https://github.com/klaustd/Public/tree/main/Board_Game_Recommender"> GitHub  repository.
+        </a>
+    </p>
+    <hr>
+
+
+      <button class="w3-button w3-dark-grey w3-padding-large w3-margin-top w3-margin-bottom">
+        <i class="fa fa-download w3-margin-right"></i>Download X
+      </button>
+    </p>
+    <hr>
+
+  </div>
+
+  <!-- Contact Section -->
+  <div class="w3-container w3-padding-large w3-grey">
+    <h4 id="contact"><b>Contact Me</b></h4>
+
+    <hr class="w3-opacity">
+    <form action="/send-email" method="POST">
+      <div class="w3-section">
+        <label>Name</label>
+        <input class="w3-input w3-border" type="text" name="Name" required>
+      </div>
+      <div class="w3-section">
+        <label>Email</label>
+        <input class="w3-input w3-border" type="text" name="Email" required>
+      </div>
+      <div class="w3-section">
+        <label>Message</label>
+        <input class="w3-input w3-border" type="text" name="Message" required>
+      </div>
+          <button type="submit" class="w3-button w3-black w3-margin-bottom"><i class="fa fa-paper-plane w3-margin-right"></i>Send Message</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer class="w3-container w3-padding-32 w3-dark-grey">
+    <div class="w3-half">
+      <h3>MY LINKS</h3>
+      <ul class="w3-ul w3-hoverable">
+          <a href="https://www.kaggle.com/tklaus/code">
+              <li class="w3-padding-16">
+              <img src="/w3images/workshop.jpg" class="w3-left w3-margin-right" style="width:50px">
+              <span style="color: white; font-size:30px">Kaggle</span><br>
+
+              </li>
+          </a>
+          <a href="https://www.linkedin.com/in/taylor-klaus-359865153/">
+              <li class="w3-padding-16">
+              <img src="/w3images/workshop.jpg" class="w3-left w3-margin-right" style="width:50px">
+              <span style="color: white; font-size:30px">LinkedIn</span><br>
+
+              </li>
+          </a>
+
+      </ul>
+    </div>
+
+    <div class="w3-half">
+      <h3>OTHER RESOURCES</h3>
+      <ul class="w3-ul w3-hoverable">
+          <a href="https://boardgamegeek.com/">
+              <li class="w3-padding-16">
+              <img src="/w3images/workshop.jpg" class="w3-left w3-margin-right" style="width:50px">
+              <span style="color: white; font-size:30px">BOARD GAME GEEK</span><br>
+
+              </li>
+          </a>
+
+      </ul>
+    </div>
+
+  </footer>
+
+  <div class="w3-black w3-center w3-padding-24">Powered by love</div>
+
+<!-- End page content -->
+</div>
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+<!-- Autocomplete Script -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">
+</script>
+<script>
+  $(function() {
+    var availableTags = [
+      {% for name in game_name %}
+      "{{name}}",
+      {% endfor %}
+    ];
+    $("#tags").autocomplete({
+      source: function(request, response) {
+        var filteredResults = $.ui.autocomplete.filter(availableTags, request.term);
+        response(filteredResults.slice(0, 20)); // Limit to 20 results
+      }
+    });
+  });
+</script>
+ <script>
+var valuesSlider = document.getElementById('values-slider');
+var valuesForSlider = [1,2,3,4,5,6,7,8,10]; // 10 values
+
+var format = {
+    to: function(value) {
+        return valuesForSlider[Math.round(value)];
+    },
+    from: function (value) {
+        return valuesForSlider.indexOf(Number(value));
+    }
+};
+
+noUiSlider.create(valuesSlider, {
+    start: [1, 10],
+    // A linear range from 0 to 15 (16 values)
+    range: { min: 0, max: valuesForSlider.length - 1 },
+    // steps of 1
+    step: 1,
+    tooltips: true,
+    format: format,
+    pips: { mode: 'steps', format: format, density:10 },
+});
+
+// The display values can be used to control the slider
+valuesSlider.noUiSlider.set(['{{min_players}}', '{{max_players}}']);
+
+</script>
+<script>
+var playerInput = document.getElementById('player_num', true, true);
+valuesSlider.noUiSlider.on('update', function (values, handle, unencoded) {
+  playerInput.value = values.join(',');
+});
+
+playerInput.addEventListener('change', function () {
+  valuesSlider.noUiSlider.set([null, this.value]);
+});
+</script>
+
+<script>
+var yearSlider = document.getElementById('year-slider');
+var yearsForSlider = [-3500, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
+
+
+var format = {
+    to: function(value) {
+        return yearsForSlider[Math.round(value)];
+    },
+    from: function (value) {
+        return yearsForSlider.indexOf(Number(value));
+    }
+};
+
+noUiSlider.create(yearSlider, {
+    start: [-3500, 2022],
+    // A linear range from 0 to 15 (16 values)
+    range: { min: 0, max: yearsForSlider.length - 1 },
+    // steps of 1
+    step: 1,
+    tooltips: true,
+    format: format,
+    pips: { mode: 'steps', format: format, density:100},
+});
+
+// The display values can be used to control the slider
+yearSlider.noUiSlider.set(['{{min_year}}', '{{max_year}}']);
+
+</script>
+<script>
+var yearInput = document.getElementById('year_num', true, true);
+yearSlider.noUiSlider.on('update', function (values, handle, unencoded) {
+  yearInput.value = values.join(',');
+});
+
+yearInput.addEventListener('change', function () {
+  yearSlider.noUiSlider.set([null, this.value]);
+});
+</script>
+</body>
+</html>
