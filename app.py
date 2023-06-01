@@ -22,7 +22,7 @@ df_features = pickle.load(open('feature_matrix.pkl', 'rb'))
 load_dotenv()  # Load environment variables from .env file
 
 # Print the value of LOCAL_HOST
-print(os.getenv('LOCAL_HOST'))
+#print(os.getenv('LOCAL_HOST'))
 ##################################################################
 # Functions for all templates
 
@@ -76,20 +76,39 @@ if not 'RUNNING_IN_PRODUCTION' in os.environ:
    # Local development, where we'll use environment variables.
    print("Loading config.development and environment variables from .env file.")
    app.config.from_object('azureproject.development')
+
 else:
    # Production, we don't load environment variables from .env file but add them as environment variables in Azure.
    print("Loading config.production.")
    app.config.from_object('azureproject.production')
 
+
 with app.app_context():
     # Establish a connection to the PostgreSQL database
-    conn = psycopg2.connect(
-        host=app.config['DB_HOST'],
-        port=app.config['DB_PORT'],
-        user=app.config['DB_USER'],
-        password=app.config['DB_PASSWORD'],
-        database=app.config['DB_NAME']
-    )
+
+    if not 'USE_REMOTE_POSTGRESQL' in os.environ:
+        # Connection to local SQL db
+        conn = psycopg2.connect(
+            host=app.config['DB_HOST'],
+            port=app.config['DB_PORT'],
+            user=app.config['DB_USER'],
+            password=app.config['DB_PASSWORD'],
+            database=app.config['DB_NAME']
+        )
+    else:
+        # Connection to Azure SQL db
+        connection_params = {
+            'host': app.config['DB_HOST'],
+            'port': app.config['DB_PORT'],
+            'dbname': app.config['DB_NAME'],
+            'user': app.config['DB_USER'],
+            'password': app.config['DB_PASSWORD'],
+            'sslmode': app.config['DB_SSL']
+        }
+
+        # Establish a connection to the PostgreSQL database
+        conn = psycopg2.connect(**connection_params)
+
     # Establish connection to mail server
     app.config['MAIL_SERVER'] = app.config['MAIL_SERVER']
     app.config['MAIL_PORT'] = app.config['MAIL_PORT']
@@ -176,13 +195,13 @@ def game_recommender():
     cursor.execute(query_exact, (esc_table_name,))
     matching_table = cursor.fetchall()
     try:
-        print(matching_table)
+        #print(matching_table)
         # check for exact matches and use first if exists
         if len(matching_table) == 0:
             match_check = False
         elif len(matching_table) == 1:
             matched_table = matching_table[0][0]
-            print(matched_table)
+            #print(matched_table)
             match_check = True
         elif len(matching_table > 1):
             matched_table = matching_table[0][0]
@@ -199,7 +218,7 @@ def game_recommender():
             elif len(alt_matching_tables) >= 1:
                 alt_match_check = True
                 alt_table = alt_matching_tables[0][0]
-                print(alt_table)
+                #print(alt_table)
         if match_check or alt_match_check:
 
             # Use exact matches if possible
