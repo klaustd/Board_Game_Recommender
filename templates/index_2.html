@@ -12,7 +12,30 @@
 <script src="{{ url_for('static', filename='js/nouislider.js') }}"></script>
 
 <style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body, h1, h2, h3, h4, h5, h6 {
+  font-family: "Raleway", sans-serif;
+}
+
+/* Media queries */
+/* Adjust styles for screens with a maximum width of 768px */
+@media (max-width: 768px) {
+  /* Adjust styles for dropdown */
+  select[name="dropdown"] {
+    width: 100%;
+    font-size: 80%; /* Adjust the font size as needed */
+  }
+
+  /* Adjust styles for dropdown options */
+  select[name="dropdown"] option {
+    font-size: 80%; /* Adjust the font size as needed */
+  }
+
+  /* Adjust styles for card images */
+  .card .card-img-top {
+    max-width: 100%;
+    height: auto;
+  }
+}
 </style>
 <style>
   .slider-container {
@@ -191,7 +214,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
     <h1><b>START HERE</b></h1>
-        <p style="font-size:30px">Looking for Some Help? See SUGGESTIONS!</p>
+        <p style="font-size:30px">Looking for Some Help? See SUGGESTIONS.</p>
     <div class="w3-section w3-bottombar w3-padding-16">
 
 
