@@ -570,14 +570,14 @@ var format = {
 };
 
 noUiSlider.create(yearSlider, {
-    start: [-3500, 2022],
+    start: [-3500, 2021],
     // A linear range from 0 to 15 (16 values)
     range: { min: 0, max: yearsForSlider.length - 1 },
     // steps of 1
     step: 1,
     tooltips: true,
     format: format,
-    pips: { mode: 'steps', format: format, density:100},
+    pips: { mode: 'values', format: format, values: [0, yearsForSlider.length - 1]},
 });
 
 // The display values can be used to control the slider
