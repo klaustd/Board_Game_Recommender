@@ -16,7 +16,6 @@ from dotenv import load_dotenv
 # DB
 import psycopg2
 
-from requests import RequestException
 
 ##################################################################
 df_games = pickle.load(open('df_games_app.pkl', 'rb'))
