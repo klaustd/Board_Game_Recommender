@@ -16,13 +16,14 @@ from dotenv import load_dotenv
 # DB
 import psycopg2
 
+from requests import RequestException
+
 ##################################################################
-df_games = pickle.load(open('games.pkl', 'rb'))
-df_features = pickle.load(open('feature_matrix.pkl', 'rb'))
+df_games = pickle.load(open('df_games_app.pkl', 'rb'))
+df_index = pickle.load(open('df_index.pkl', 'rb'))
 load_dotenv()  # Load environment variables from .env file
 
-# Print the value of LOCAL_HOST
-#print(os.getenv('LOCAL_HOST'))
+
 ##################################################################
 # Functions for all templates
 
@@ -32,8 +33,8 @@ def rec_value_getter(names):
     data_suggest = []
     for i in names:
         inner_list = []
-        index_suggest = np.where(df_features.index == i)[0][0]
-        df_suggest = df_games[df_games['Name'] == i]
+        index_suggest = np.where(df_index.index == i)[0][0]
+        df_suggest = df_games[df_games['Name'].str.contains(i, case=False, regex=False)]
         # Ensure searched game is only game left in df
         df_suggest = df_suggest.loc[index_suggest]
         # print(df_suggest)
@@ -73,15 +74,14 @@ app = Flask(__name__, static_folder='static')
 
 # If RUNNING_IN_PRODUCTION is defined as an environment variable, then we're running on Azure
 if not 'RUNNING_IN_PRODUCTION' in os.environ:
-   # Local development, where we'll use environment variables.
-   print("Loading config.development and environment variables from .env file.")
-   app.config.from_object('azureproject.development')
+    # Local development, where we'll use environment variables.
+    print("Loading config.development and environment variables from .env file.")
+    app.config.from_object('azureproject.development')
 
 else:
-   # Production, we don't load environment variables from .env file but add them as environment variables in Azure.
-   print("Loading config.production.")
-   app.config.from_object('azureproject.production')
-
+    # Production, we don't load environment variables from .env file but add them as environment variables in Azure.
+    print("Loading config.production.")
+    app.config.from_object('azureproject.production')
 
 with app.app_context():
     # Establish a connection to the PostgreSQL database
@@ -123,7 +123,7 @@ mail = Mail(app)
 # index folder MUST be named "templates"
 def index():
     min_players, max_players = map(float, [1, 10])
-    min_year, max_year = map(float, [-3500, 2022])
+    min_year, max_year = map(float, [-3500, 2021])
     return render_template('index_2.html', top_suggest=top_suggest, selected_option='option1',
                            two_player_suggest=two_player_suggest,
                            party_suggest=party_suggest,
@@ -140,11 +140,12 @@ def game_recommender():
     # List of output variables:
 
     # Get values from forms
-    dropdown_value = request.form.get('dropdown')
-    table_name = request.form.get('user_input')
+    dropdown_value = request.form.get('dropdown', 'option1')
+    table_name = request.form.get('user_input', 'Gloomhaven')
+
     # making a copy to report back as we will modify the input
     search_name = table_name
-    #print(search_name)
+    # print(search_name)
     min_players, max_players = map(float, request.form.get('player_num').split(','))
     min_year, max_year = map(float, request.form.get('year_num').split(','))
 
@@ -195,13 +196,13 @@ def game_recommender():
     cursor.execute(query_exact, (esc_table_name,))
     matching_table = cursor.fetchall()
     try:
-        #print(matching_table)
+        # print(matching_table)
         # check for exact matches and use first if exists
         if len(matching_table) == 0:
             match_check = False
         elif len(matching_table) == 1:
             matched_table = matching_table[0][0]
-            #print(matched_table)
+            # print(matched_table)
             match_check = True
         elif len(matching_table > 1):
             matched_table = matching_table[0][0]
@@ -218,7 +219,7 @@ def game_recommender():
             elif len(alt_matching_tables) >= 1:
                 alt_match_check = True
                 alt_table = alt_matching_tables[0][0]
-                #print(alt_table)
+                # print(alt_table)
         if match_check or alt_match_check:
 
             # Use exact matches if possible

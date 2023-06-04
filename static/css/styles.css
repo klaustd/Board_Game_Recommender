@@ -1,0 +1,131 @@
+body, h1, h2, h3, h4, h5, h6 {
+  font-family: "Raleway", sans-serif;
+}
+
+/* Media queries */
+/* Adjust styles for screens with a maximum width of 768px */
+@media (max-width: 768px) {
+  /* Adjust styles for dropdown */
+  select[name="dropdown"] {
+    width: 100%;
+    font-size: 80%; /* Adjust the font size as needed */
+  }
+
+  /* Adjust styles for dropdown options */
+  select[name="dropdown"] option {
+    font-size: 80%; /* Adjust the font size as needed */
+  }
+
+  /* Adjust styles for card images */
+  .card .card-img-top {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Additional styles */
+.slider-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px; /* Adds space below the slider container */
+}
+
+.slider-values {
+  margin: 10px;
+}
+
+.slider-round {
+  margin: 50px;
+}
+
+.slider-round .noUi-handle .noUi-touch-area {
+  border: 1px solid transparent;
+  position: absolute;
+  background: #2980b9;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  width: auto;
+  height: auto;
+  border-radius: 9px;
+}
+
+/* Media queries */
+/* Adjust styles for screens with a maximum width of 768px */
+@media (max-width: 768px) {
+  .slider-container {
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+  .slider-values {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .slider {
+    width: 100%;
+  }
+}
+
+/* Adjust styles for screens with a maximum width of 480px */
+@media (max-width: 480px) {
+  .slider {
+    width: 90%;
+  }
+}
+
+/* Additional styles */
+select[name="dropdown"] {
+  margin: 0px 0; /* Adjust the margin as per your requirement */
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.submit-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dropdown-container {
+  flex-basis: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.submit-container {
+  flex-basis: 100%;
+  text-align: center;
+}
+
+.autofill-container {
+  flex-basis: 100%;
+  align-items: center; /* Adjust this property for vertical justification */
+  /* Other styles for the container */
+  height: 80%;
+  width: 10%;
+  border: 1px solid black;
+}
+
+/* Media query for narrow screens */
+@media screen and (max-width: 480px) {
+  .dropdown-container,
+  .submit-container {
+    flex-basis: 100%;
+  }
+}
+
+/* Adjust text size inside the dropdown */
+select {
+  font-size: 100%; /* Set the desired text size */
+}
+
+/* Adjust text size of dropdown options */
+select option {
+  font-size: 100%;

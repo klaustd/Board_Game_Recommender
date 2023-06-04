@@ -10,165 +10,7 @@
 <!-- Sliderbar files -->
 <link href="{{ url_for('static', filename='css/nouislider.css') }}" rel="stylesheet">
 <script src="{{ url_for('static', filename='js/nouislider.js') }}"></script>
-
-<style>
-body, h1, h2, h3, h4, h5, h6 {
-  font-family: "Raleway", sans-serif;
-}
-
-/* Media queries */
-/* Adjust styles for screens with a maximum width of 768px */
-@media (max-width: 768px) {
-  /* Adjust styles for dropdown */
-  select[name="dropdown"] {
-    width: 100%;
-    font-size: 80%; /* Adjust the font size as needed */
-  }
-
-  /* Adjust styles for dropdown options */
-  select[name="dropdown"] option {
-    font-size: 80%; /* Adjust the font size as needed */
-  }
-
-  /* Adjust styles for card images */
-  .card .card-img-top {
-    max-width: 100%;
-    height: auto;
-  }
-}
-</style>
-<style>
-  .slider-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px; /* Adds space below the slider container */
-  }
-
-  .slider-values {
-    margin: 10px;
-  }
-</style>
-<style>
-    .slider-round {
-        margin: 50px;
-    }
-
-    .slider-round .noUi-handle .noUi-touch-area {
-        border: 1px solid transparent;
-        position: absolute;
-        background: #2980b9;
-        top: -5px;
-        left: -5px;
-        right: -5px;
-        bottom: -5px;
-        width: auto;
-        height: auto;
-        border-radius: 9px;
-
-
-    }
-</style>
-<style>
-   /* Media queries */
-
-    /* Adjust styles for screens with a maximum width of 768px */
-    @media (max-width: 768px) {
-    .slider-container {
-      flex-direction: column;
-      margin-bottom: 10px;
-    }
-
-    .slider-values {
-      margin-left: 0;
-      margin-top: 10px;
-    }
-
-    .slider {
-      width: 100%;
-    }
-  }
-
-  /* Adjust styles for screens with a maximum width of 480px */
-  @media (max-width: 480px) {
-    .slider {
-      width: 90%;
-    }
-  }
-
-</style>
-
-<style>
-    select[name="dropdown"] {
-        margin: 0px 0; /* Adjust the margin as per your requirement */
-    }
-</style>
-<style>
-    .form-group {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-</style>
-<style>
-    .submit-row {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .dropdown-container {
-        flex-basis: 100%;
-        text-align: center;
-        margin-bottom: 10px;
-    }
-
-    .submit-container {
-        flex-basis: 100%;
-        text-align: center;
-    }
-      .autofill-container {
-    flex-basis: 100%;
-    align-items: center; /* Adjust this property for vertical justification */
-    /* Other styles for the container */
-    height: 80%;
-    width: 10%;
-    border: 1px solid black;
-  }
-    /* Media query for narrow screens */
-    @media screen and (max-width: 480px) {
-        .dropdown-container,
-        .submit-container {
-            flex-basis: 100%;
-        }
-    }
-</style>
-<style>
-  /* Adjust text size inside the dropdown */
-  select {
-    font-size: 100%; /* Set the desired text size */
-  }
-
-  /* Adjust text size of dropdown options */
-  select option {
-    font-size: 100%; /* Set the desired text size */
-  }
-</style>
-
-<style>
-    .submit-container {
-    flex: 0;
-}
-</style>
-<style>
-  ::placeholder {
-    /* CSS properties for the placeholder text */
-    font-family: Arial, sans-serif;
-    font-size: 120%;
-    color: #999999;
-    /* Add more CSS properties as needed */
-  }
-</style>
-
+<link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
 
 </head>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
@@ -239,7 +81,7 @@ body, h1, h2, h3, h4, h5, h6 {
                                 <option value="option4"{% if selected_option == 'option4' %}selected{% endif %}>ANTI-RECOMMENDER (I know what I don't like!)</option>
 
                               </select>
-                                <input type="text" id="tags" name="user_input", placeholder="Search Here">
+                                <input type="text" id="tags" name="user_input" required placeholder="Search Here">
                             </div>
                             <div class="submit-container">
                                 <input type="submit" value="Submit">
@@ -389,15 +231,8 @@ body, h1, h2, h3, h4, h5, h6 {
 
   <!-- Images of Me -->
   <div class="w3-row-padding w3-padding-16" id="about">
-    <div class="w3-col m6">
-      <img src="/w3images/avatar_g.jpg" alt="Me" style="width:100%">
-    </div>
-    <div class="w3-col m6">
-      <img src="/w3images/me2.jpg" alt="Me" style="width:100%">
-    </div>
-  </div>
 
-  <div class="w3-container w3-padding-large" style="margin-bottom:32px">
+    <div class="w3-container w3-padding-large" style="margin-bottom:32px">
     <h4><b>About</b></h4>
     <p style="font-size:20px">Why make something like this?<br><br>
 
@@ -407,16 +242,8 @@ body, h1, h2, h3, h4, h5, h6 {
         </a>
     </p>
     <hr>
-
-
-      <button class="w3-button w3-dark-grey w3-padding-large w3-margin-top w3-margin-bottom">
-        <i class="fa fa-download w3-margin-right"></i>Download X
-      </button>
-    </p>
-    <hr>
-
-  </div>
-
+    </div>
+    </div>
   <!-- Contact Section -->
   <div class="w3-container w3-padding-large w3-grey">
     <h4 id="contact"><b>Contact Me</b></h4>
@@ -441,19 +268,17 @@ body, h1, h2, h3, h4, h5, h6 {
 
   <!-- Footer -->
   <footer class="w3-container w3-padding-32 w3-dark-grey">
-    <div class="w3-half">
-      <h3>MY LINKS</h3>
+    <div class="w3-half" style="text-align: center;">
+      <h2>MY LINKS</h2>
       <ul class="w3-ul w3-hoverable">
           <a href="https://www.kaggle.com/tklaus/code">
-              <li class="w3-padding-16">
-              <img src="/w3images/workshop.jpg" class="w3-left w3-margin-right" style="width:50px">
+              <li class="w3-padding-16" >
               <span style="color: white; font-size:30px">Kaggle</span><br>
 
               </li>
           </a>
           <a href="https://www.linkedin.com/in/taylor-klaus-359865153/">
               <li class="w3-padding-16">
-              <img src="/w3images/workshop.jpg" class="w3-left w3-margin-right" style="width:50px">
               <span style="color: white; font-size:30px">LinkedIn</span><br>
 
               </li>
@@ -462,12 +287,11 @@ body, h1, h2, h3, h4, h5, h6 {
       </ul>
     </div>
 
-    <div class="w3-half">
-      <h3>OTHER RESOURCES</h3>
+    <div class="w3-half" style="text-align: center;">
+      <h2>OTHER RESOURCES</h2>
       <ul class="w3-ul w3-hoverable">
           <a href="https://boardgamegeek.com/">
               <li class="w3-padding-16">
-              <img src="/w3images/workshop.jpg" class="w3-left w3-margin-right" style="width:50px">
               <span style="color: white; font-size:30px">BOARD GAME GEEK</span><br>
 
               </li>
@@ -478,7 +302,7 @@ body, h1, h2, h3, h4, h5, h6 {
 
   </footer>
 
-  <div class="w3-black w3-center w3-padding-24">Powered by love</div>
+  <div class="w3-black w3-center w3-padding-24">Powered by Flask, PostgreSQL, and Microsoft Azure Container Apps</div>
 
 <!-- End page content -->
 </div>
@@ -557,7 +381,7 @@ playerInput.addEventListener('change', function () {
 
 <script>
 var yearSlider = document.getElementById('year-slider');
-var yearsForSlider = [-3500, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
+var yearsForSlider = [-3500, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021]
 
 
 var format = {
@@ -570,7 +394,7 @@ var format = {
 };
 
 noUiSlider.create(yearSlider, {
-    start: [-3500, 2021],
+    start: [-3500, 2020],
     // A linear range from 0 to 15 (16 values)
     range: { min: 0, max: yearsForSlider.length - 1 },
     // steps of 1
