@@ -23,7 +23,7 @@
     </a>
     <img src="{{url_for('static', filename='images/brand.png')}}" style="width:100%;" class="w3-round"><br><br>
     <h4><b>Board Game Recommender</b></h4>
-    <p class="w3-text-grey">Recommendations using collaborative filtering</p>
+    <p class="w3-text-grey">Content Based and Collaborative Filtering Recommendations</p>
   </div>
   <div class="w3-bar-block">
     <a href="#recommender" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>RECOMMENDER</a>
@@ -33,7 +33,7 @@
 
   </div>
   <div class="w3-panel w3-large">
-      <a  href="https://github.com/klaustd/Public/tree/main/Board_Game_Recommender">
+      <a  href="https://github.com/klaustd/">
           <i class="fa fa-github w3-hover-opacity"></i>
       </a>
       <a href="https://www.linkedin.com/in/taylor-klaus-359865153/">
@@ -52,7 +52,6 @@
 
   <!-- Header -->
   <header id="recommender">
-    <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
     <h1><b>START HERE</b></h1>
@@ -71,7 +70,13 @@
                 <form method="POST" action="/recommend_games">
                         <div class="submit-row">
                             <div class="dropdown-container">
-                              <select name="dropdown">
+                                <label for="tags">Game Title</label>
+                                <input type="text" id="tags" name="user_input" required placeholder="Search Here">
+                            </div>
+                            <div class="dropdown-container">
+
+                              <label for="dropdown">Filter Method</label>
+                              <select name="dropdown" id="dropdown">
                                 <option value="option1" {% if selected_option == 'option1' %}selected{% endif %}>THEME AND MECHANICS (Find me games with similar themes and mechanics!)</option>
 
                                 <option value="option2"{% if selected_option == 'option2' %}selected{% endif %}>MECHANICS ONLY (I liked the way this game played, and the theme doesn't matter as much to me.)</option>
@@ -81,7 +86,7 @@
                                 <option value="option4"{% if selected_option == 'option4' %}selected{% endif %}>ANTI-RECOMMENDER (I know what I don't like!)</option>
 
                               </select>
-                                <input type="text" id="tags" name="user_input" required placeholder="Search Here">
+
                             </div>
                             <div class="submit-container">
                                 <input type="submit" value="Submit">
@@ -238,7 +243,7 @@
 
       I believe that there is a boardgame to be discovered out there for everyone, whether new to the hobby or a grizzled gamer. I wanted to make a tool that allowed people to discover boardgames to enjoy using a variety of methods.<br><br>
 
-      If you are interested in the data or code of the project see the<a href="https://github.com/klaustd/Public/tree/main/Board_Game_Recommender"> GitHub  repository.
+      If you are interested in the data or code of the project see the<a href="https://github.com/klaustd/Board_Game_Recommender_v1.0"> GitHub  repository.
         </a>
     </p>
     <hr>
@@ -271,6 +276,12 @@
     <div class="w3-half" style="text-align: center;">
       <h2>MY LINKS</h2>
       <ul class="w3-ul w3-hoverable">
+          <a href="https://github.com/klaustd/">
+              <li class="w3-padding-16">
+              <span style="color: white; font-size:30px">GitHub</span><br>
+
+              </li>
+          </a>
           <a href="https://www.kaggle.com/tklaus/code">
               <li class="w3-padding-16" >
               <span style="color: white; font-size:30px">Kaggle</span><br>
@@ -283,7 +294,6 @@
 
               </li>
           </a>
-
       </ul>
     </div>
 

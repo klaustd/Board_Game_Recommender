@@ -22,7 +22,6 @@ df_games = pickle.load(open('df_games_app.pkl', 'rb'))
 df_index = pickle.load(open('df_index.pkl', 'rb'))
 load_dotenv()  # Load environment variables from .env file
 
-
 ##################################################################
 # Functions for all templates
 
