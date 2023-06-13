@@ -55,7 +55,7 @@
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
     <h1><b>START HERE</b></h1>
-        <p style="font-size:30px">Looking for Some Help? See SUGGESTIONS.</p>
+        <p style="font-size:30px">Looking for Some Ideas? See SUGGESTIONS.</p>
     <div class="w3-section w3-bottombar w3-padding-16">
 
 
@@ -75,7 +75,7 @@
                             </div>
                             <div class="dropdown-container">
 
-                              <label for="dropdown">Filter Method</label>
+                              <label for="dropdown">Choose Filter Method</label>
                               <select name="dropdown" id="dropdown">
                                 <option value="option1" {% if selected_option == 'option1' %}selected{% endif %}>THEME AND MECHANICS (Find me games with similar themes and mechanics!)</option>
 
@@ -239,11 +239,22 @@
 
     <div class="w3-container w3-padding-large" style="margin-bottom:32px">
     <h4><b>About</b></h4>
-    <p style="font-size:20px">Why make something like this?<br><br>
+    <p style="font-size:20px"><br>Why make something like this?<br><br>
+        I think that there's a perfect board game waiting to be discovered by everyone, regardless of whether you're new
+        to the hobby or a grizzled gamer. That's why I created a powerful tool that empowers you to explore and find
+        board games that you'll truly enjoy, using a variety of methods.<br><br>
 
-      I believe that there is a boardgame to be discovered out there for everyone, whether new to the hobby or a grizzled gamer. I wanted to make a tool that allowed people to discover boardgames to enjoy using a variety of methods.<br><br>
+        I designed the system to give you control and customization over the recommendations you receive. You can choose
+        which features and aspects of board games are emphasized, enabling you to explore tailored recommendations that
+        align with your specific interests and gameplay preferences. By providing you these choices, my aim is to help
+        you uncover hidden gems, explore different themes and mechanics, and find board games that resonate with your
+        gaming style.<br><br>
 
-      If you are interested in the data or code of the project see the<a href="https://github.com/klaustd/Board_Game_Recommender_v1.0"> GitHub  repository.
+        Alongside creating a tool that I feel would be helpful in discovering board games for everyone to enjoy, this
+        was a learning opportunity for me to create a site and filtering system from the ground up. I still have more I
+        want to add to this site, and have enjoyed having a project that has helped me grow in different skills. <br><br>
+
+        If you are interested in the data or code of the project see the<a href="https://github.com/klaustd/Board_Game_Recommender_v1.0"> GitHub  repository.
         </a>
     </p>
     <hr>
@@ -257,15 +268,15 @@
     <form action="/send-email" method="POST">
       <div class="w3-section">
         <label>Name</label>
-        <input class="w3-input w3-border" type="text" name="Name" required>
+        <input class="w3-input w3-border" type="text" name="Name" required maxlength="50">
       </div>
       <div class="w3-section">
         <label>Email</label>
-        <input class="w3-input w3-border" type="text" name="Email" required>
+        <input class="w3-input w3-border" type="text" name="Email" required maxlength="100">
       </div>
       <div class="w3-section">
         <label>Message</label>
-        <input class="w3-input w3-border" type="text" name="Message" required>
+        <input class="w3-input w3-border" type="text" name="Message" required maxlength="1000">
       </div>
           <button type="submit" class="w3-button w3-black w3-margin-bottom"><i class="fa fa-paper-plane w3-margin-right"></i>Send Message</button>
     </form>
@@ -302,7 +313,7 @@
       <ul class="w3-ul w3-hoverable">
           <a href="https://boardgamegeek.com/">
               <li class="w3-padding-16">
-              <span style="color: white; font-size:30px">BOARD GAME GEEK</span><br>
+              <span style="color: white; font-size:30px">Board Game Geek</span><br>
 
               </li>
           </a>
