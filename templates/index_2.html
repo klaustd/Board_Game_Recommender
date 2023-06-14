@@ -407,7 +407,12 @@ var yearsForSlider = [-3500, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 199
 
 var format = {
     to: function(value) {
-        return yearsForSlider[Math.round(value)];
+        if (value == 0){
+            return 'Older than 1985';
+        }
+        else{
+            return yearsForSlider[Math.round(value)];
+            }
     },
     from: function (value) {
         return yearsForSlider.indexOf(Number(value));

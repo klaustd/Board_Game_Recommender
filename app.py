@@ -59,7 +59,8 @@ party_recs = ['Skull', 'No Thanks!', 'Codenames', 'Crokinole']
 character_map = {' ': '_', '!': '_', '*': '_', '^': '_', '%': '_', '$': '_', '&': 'and',
                  ':': '_', '#': '_', "'": '_', '(': '_', ')': '_', '/': '_',
                  '.': '_', ',': '_', '-': '_', '?': '_', '`': '_', '+': '_', '"': '_', '[': '_',
-                 ']': '_', '=': '_', '@': '_'}
+                 ']': '_', '=': '_', '@': '_', ';': '_', '<': '_', '>': '_', '}': '_', '{': '_',
+                 '~': '_', '|': '_', '\\': '_'}
 
 top_suggest = rec_value_getter(personal_recs)
 two_player_suggest = rec_value_getter(two_player_recs)
@@ -121,7 +122,7 @@ mail = Mail(app)
 # index folder MUST be named "templates"
 def index():
     min_players, max_players = map(float, [1, 10])
-    min_year, max_year = map(float, [-3500, 2021])
+    min_year, max_year = map(float, [1950, 2021])
     return render_template('index_2.html', top_suggest=top_suggest, selected_option='option1',
                            two_player_suggest=two_player_suggest,
                            party_suggest=party_suggest,
@@ -145,7 +146,7 @@ def game_recommender():
     if table_name is None:
 
         min_players, max_players = map(float, [1, 10])
-        min_year, max_year = map(float, [-3500, 2021])
+        min_year, max_year = map(float, [1950, 2021])
         return render_template('index_2.html', top_suggest=top_suggest, selected_option='option1',
                                two_player_suggest=two_player_suggest,
                                party_suggest=party_suggest,
@@ -156,10 +157,21 @@ def game_recommender():
     else:
         # making a copy to report back as we will modify the input
         search_name = table_name
-        # print(search_name)
+        # g
         min_players, max_players = map(float, request.form.get('player_num').split(','))
-        min_year, max_year = map(float, request.form.get('year_num').split(','))
-
+        # for
+        try:
+            min_year, max_year = map(float, request.form.get('year_num').split(','))
+        except:
+            min_year, max_year = map(str, request.form.get('year_num').split(','))
+            if max_year == 'Older than 1985':
+                max_year = 1984
+            else:
+                max_year = float(max_year)
+            if min_year == 'Older than 1985':
+                min_year = -10000
+            else:
+                min_year = float(min_year)
         # Set suggestion number
         suggestions = 20
 
