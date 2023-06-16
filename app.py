@@ -1,6 +1,5 @@
-######################################################
-# Board Game Recommender
-# Inputs
+##################################################
+# Board Game Recommender v1.1
 ##################################################
 import os
 import random
@@ -13,16 +12,15 @@ from flask_wtf.csrf import CSRFProtect
 import numpy as np
 import pickle
 from dotenv import load_dotenv
+
 # DB
 import psycopg2
 
-##################################################################
+################################################
 df_games = pickle.load(open('df_games_app.pkl', 'rb'))
 df_index = pickle.load(open('df_index.pkl', 'rb'))
 load_dotenv()  # Load environment variables from .env file
-
-
-##################################################################
+################################################
 # Functions for all templates
 
 def rec_value_getter(names):
@@ -47,8 +45,7 @@ def rec_value_getter(names):
         data_suggest.append(inner_list)
     return data_suggest
 
-
-##################################################################
+################################################
 # Variables for all templates
 
 personal_recs = ['Dominant Species', 'Planet Steam', 'Cascadia', 'The Castles of Burgundy', 'Gloomhaven',
@@ -66,7 +63,7 @@ top_suggest = rec_value_getter(personal_recs)
 two_player_suggest = rec_value_getter(two_player_recs)
 party_suggest = rec_value_getter(party_recs)
 
-###########################################################################
+################################################
 # Start of app
 
 app = Flask(__name__, static_folder='static')
@@ -117,10 +114,21 @@ with app.app_context():
 
 mail = Mail(app)
 
-
 @app.route('/')
 # index folder MUST be named "templates"
 def index():
+    ################################################
+    # OUTPUT VARIABLES:
+    # index_2.html - the html template to render
+    # top_suggest - list of top game suggestions
+    # two_player_suggest - list of two player game suggestions
+    # party_suggest - list of party game suggestions
+    # min_players - min number of players used in filtering (slider bar)
+    # max_players - max number of players used in filtering (slider bar)
+    # min_year - min year used in filtering (slider bar)
+    # max_year - max year used in filtering (slider bar)
+    # game_name - list of games names for Autofill
+    ################################################
     min_players, max_players = map(float, [1, 10])
     min_year, max_year = map(float, [1950, 2021])
     return render_template('index_2.html', top_suggest=top_suggest, selected_option='option1',
@@ -134,9 +142,30 @@ def index():
 
 @app.route('/recommend_games', methods=['GET', 'POST'])
 def game_recommender():
-    # List of input variables:
-
-    # List of output variables:
+    ################################################
+    # INPUT VARIABLES:
+    # dropdown - dropdown form indicating what type of filtering to use
+    # user_input - the game name (hopefully) being searched for by user in search bar (string)
+    # player_num - the min/max values of slider bar for players wanted (will use default values if GET method used)
+    # year_num - the min/max values of slider bar for years wanted (will use default values if GET method used)
+    ################################################
+    # OUTPUT VARIABLES:
+    # index_2.html - the html template to render
+    # selected_option - the option chosen in the dropdown form (string)
+    # top_suggest - list of top game suggestions
+    # two_player_suggest - list of two player game suggestions
+    # party_suggest - list of party game suggestions
+    # min_players - min number of players used in filtering (slider bar)
+    # max_players - max number of players used in filtering (slider bar)
+    # min_year - min year used in filtering (slider bar)
+    # max_year - max year used in filtering (slider bar)
+    # game_name - list of games names for Autofill
+    # data_list (optional) - nested list of game information from SQL db
+    # rec_name (optional) - name of recommender filter chosen (string)
+    # search_name (optional) - the game name (hopefully) being searched for by user in search bar (string)
+    # feedback (optional) - message reporting that game cannot be found (string)
+    # error_message (optional) - message reporting that somebody broke something... (string)
+    ################################################
 
     # Get values from forms
     dropdown_value = request.form.get('dropdown')
@@ -157,9 +186,9 @@ def game_recommender():
     else:
         # making a copy to report back as we will modify the input
         search_name = table_name
-        # g
+        # get min/max player slider bar values
         min_players, max_players = map(float, request.form.get('player_num').split(','))
-        # for
+        # get min/max year slider bar values
         try:
             min_year, max_year = map(float, request.form.get('year_num').split(','))
         except:
@@ -172,6 +201,7 @@ def game_recommender():
                 min_year = -10000
             else:
                 min_year = float(min_year)
+
         # Set suggestion number
         suggestions = 20
 
@@ -333,12 +363,22 @@ def game_recommender():
 
 @app.route('/send-email', methods=['post'])
 def send_email():
+    ################################################
+    # INPUT VARIABLES:
+    # Name - Name field from contact section
+    # Email - Email field from contact section
+    # Message - Message field from contact section
+
+    # OUTPUT VARIABLES:
+    # msg - the email being sent using Flask Mail
+    ################################################
     name_value = request.form.get('Name')
     # print(name_value)
     email_value = request.form.get('Email')
     message_value = request.form.get('Message')
-    msg = Message('Thanks for the message, ' + name_value + '!', sender='reply.wswp@gmail.com', recipients=['tdklaus@gmail.com',
-                                                                                         email_value])
+    msg = Message('Thanks for the message, ' + name_value + '!', sender='reply.wswp@gmail.com',
+                  recipients=['reply.wswp@gmail.com',
+                              email_value])
     msg.body = 'This is a copy of your message: "' + message_value + '"'
     mail.send(msg)
     return 'Email sent!'
