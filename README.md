@@ -49,7 +49,7 @@ msg - the email being sent using Flask Mail
 Development vs Production
 
 environmental variables are accessed with development.py when in dev mode, otherwise production.py is used 
-################################################
+# ###############################################
 Various Input Files
 
 df_games_app.pkl and df_index.pkl are used to provide game names for autofill and initial features
