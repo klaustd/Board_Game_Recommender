@@ -14,6 +14,8 @@ By providing you these choices, my aim is to help you uncover hidden gems, explo
 
 Alongside creating a tool that I feel would be helpful in discovering board games for everyone to enjoy, this was a learning opportunity for me to create a site and filtering system from the ground up.
 I still have more I want to add to this site, and have enjoyed having a project that has helped me grow in different skills.
+
+To see the Jupyter notebooks for the creation of the similarity scores, visit this repository: https://github.com/klaustd/Board_Game_Recommender_Jupyter.
 # #################################################
 
 Main App Variables
