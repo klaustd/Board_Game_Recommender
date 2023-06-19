@@ -1,54 +1,27 @@
 ##################################################
-# Board Game Recommender v1.1
+# Board Game Recommender v1.2
 ##################################################
 import os
 import random
 import re
 
-import pandas as pd
 from flask import Flask, render_template, request
 from flask_mail import Mail, Message
 from flask_wtf.csrf import CSRFProtect
-import numpy as np
-import pickle
+
+# environmental variables
 from dotenv import load_dotenv
 
 # DB
 import psycopg2
 
 ################################################
-df_games = pickle.load(open('df_games_app.pkl', 'rb'))
-df_index = pickle.load(open('df_index.pkl', 'rb'))
 load_dotenv()  # Load environment variables from .env file
 ################################################
-# Functions for all templates
 
-def rec_value_getter(names):
-    # input - list of recommended game names
-    # output - list of a list of values from df_games associated with names
-    data_suggest = []
-    for i in names:
-        inner_list = []
-        index_suggest = np.where(df_index.index == i)[0][0]
-        df_suggest = df_games[df_games['Name'].str.contains(i, case=False, regex=False)]
-        # Ensure searched game is only game left in df
-        df_suggest = df_suggest.loc[index_suggest]
-        # print(df_suggest)
-        # print(i[0])
-        # Counter to track number of suggestions shows
-        inner_list.extend([df_suggest['Name']])
-        inner_list.extend([df_suggest['ImagePath']])
-        inner_list.extend([df_suggest['YearPublished']])
-        inner_list.extend([df_suggest['MfgPlaytime']])
-        inner_list.extend([df_suggest['MinPlayers']])
-        inner_list.extend([df_suggest['MaxPlayers']])
-        data_suggest.append(inner_list)
-    return data_suggest
-
-################################################
 # Variables for all templates
 
-personal_recs = ['Dominant Species', 'Planet Steam', 'Cascadia', 'The Castles of Burgundy', 'Gloomhaven',
+personal_recs = ['Dominant Species', 'Planet Steam', 'Cascadia', 'The Castles of Burgundy (84876)', 'Gloomhaven',
                  'Ticket to Ride: Europe', 'Battlestar Galactica: The Board Game', 'Terraforming Mars']
 two_player_recs = ['Battle Line', 'Android: Netrunner', 'Twilight Struggle', '7 Wonders Duel']
 party_recs = ['Skull', 'No Thanks!', 'Codenames', 'Crokinole']
@@ -59,11 +32,8 @@ character_map = {' ': '_', '!': '_', '*': '_', '^': '_', '%': '_', '$': '_', '&'
                  ']': '_', '=': '_', '@': '_', ';': '_', '<': '_', '>': '_', '}': '_', '{': '_',
                  '~': '_', '|': '_', '\\': '_'}
 
-top_suggest = rec_value_getter(personal_recs)
-two_player_suggest = rec_value_getter(two_player_recs)
-party_suggest = rec_value_getter(party_recs)
-
 ################################################
+
 # Start of app
 
 app = Flask(__name__, static_folder='static')
@@ -114,6 +84,43 @@ with app.app_context():
 
 mail = Mail(app)
 
+
+################################################
+# Functions for all templates
+
+# Get index for game title
+def rec_value_getter(names):
+    cursor = conn.cursor()
+
+    # Create a comma-separated string of placeholders for the game names
+    placeholders = ','.join(['%s'] * len(names))
+
+    # Execute a SELECT query to fetch the table
+    query = "SELECT name, image, year_pub, play_time, min_players, max_players, avg_rating " \
+            "FROM table_game_info WHERE name IN ({}) ORDER BY year_pub DESC".format(placeholders)
+    cursor.execute(query, names)
+    matching_games = cursor.fetchall()
+
+    cursor.close()
+    return matching_games
+
+
+################################################
+# Variables for app
+top_suggest = rec_value_getter(personal_recs)
+two_player_suggest = rec_value_getter(two_player_recs)
+party_suggest = rec_value_getter(party_recs)
+
+# Get game names for autofill
+cursor = conn.cursor()
+cursor.execute("SELECT name from table_game_info")
+results = cursor.fetchall()
+name_list = [row[0] for row in results]
+cursor.close()
+
+
+################################################
+# print(game_names)
 @app.route('/')
 # index folder MUST be named "templates"
 def index():
@@ -136,7 +143,7 @@ def index():
                            party_suggest=party_suggest,
                            min_players=min_players, max_players=max_players,
                            min_year=min_year, max_year=max_year,
-                           game_name=list(df_games['Name'].values)
+                           game_name=name_list
                            )
 
 
@@ -181,7 +188,7 @@ def game_recommender():
                                party_suggest=party_suggest,
                                min_players=min_players, max_players=max_players,
                                min_year=min_year, max_year=max_year,
-                               game_name=list(df_games['Name'].values)
+                               game_name=name_list
                                )
     else:
         # making a copy to report back as we will modify the input
@@ -335,7 +342,8 @@ def game_recommender():
                                        max_players=max_players,
                                        min_year=min_year, max_year=max_year,
                                        rec_name=rec_name, data=data_list,
-                                       game_name=list(df_games['Name'].values))
+                                       game_name=name_list
+                                       )
 
             else:
                 # If no exact or partial matches, return feedback to user
@@ -346,7 +354,7 @@ def game_recommender():
                                        party_suggest=party_suggest,
                                        min_players=min_players, max_players=max_players,
                                        min_year=min_year, max_year=max_year,
-                                       game_name=list(df_games['Name'].values)
+                                       game_name=name_list
                                        )
             cursor.close()
 
@@ -357,7 +365,7 @@ def game_recommender():
                                    party_suggest=party_suggest,
                                    min_players=min_players, max_players=max_players,
                                    min_year=min_year, max_year=max_year,
-                                   game_name=list(df_games['Name'].values)
+                                   game_name=name_list
                                    )
 
 

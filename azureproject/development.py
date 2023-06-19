@@ -7,13 +7,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = True
 
 SECRET_KEY = os.getenv('LOCAL_SECRET_KEY')
-
+print(SECRET_KEY)
 # Configure database connection for remote PostgreSQL instance.
 if 'USE_REMOTE_POSTGRESQL' in os.environ:
     DB_HOST = os.environ['AZURE_POSTGRESQL_HOST']
     DB_NAME = os.environ['AZURE_POSTGRESQL_DATABASE']
     DB_USER = os.environ['AZURE_POSTGRESQL_USERNAME']
+    DB_PORT = os.environ['AZURE_POSTGRESQL_PORT']
     DB_PASSWORD = os.environ['AZURE_POSTGRESQL_PASSWORD']
+    DB_SSL = os.environ['AZURE_POSTGRESQL_SSL']
     # Establish connection to mail server
     MAIL_SERVER = os.environ['PROD_MAIL_SERVER']
     MAIL_PORT = os.environ['PROD_MAIL_PORT']
