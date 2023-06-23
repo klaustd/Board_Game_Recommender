@@ -5,9 +5,10 @@ import os
 import random
 import re
 
-from flask import Flask, render_template, request
+from flask import Flask, make_response, render_template, request
 from flask_mail import Mail, Message
 from flask_wtf.csrf import CSRFProtect
+from flask_caching import Cache
 
 # environmental variables
 from dotenv import load_dotenv
@@ -37,6 +38,9 @@ character_map = {' ': '_', '!': '_', '*': '_', '^': '_', '%': '_', '$': '_', '&'
 # Start of app
 
 app = Flask(__name__, static_folder='static')
+
+# Initialize Flask-Cache
+cache = Cache(app)
 
 # If RUNNING_IN_PRODUCTION is defined as an environment variable, then we're running on Azure
 if not 'RUNNING_IN_PRODUCTION' in os.environ:
@@ -122,6 +126,7 @@ cursor.close()
 ################################################
 # print(game_names)
 @app.route('/')
+@cache.cached()
 # index folder MUST be named "templates"
 def index():
     ################################################
