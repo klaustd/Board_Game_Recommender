@@ -40,7 +40,7 @@ character_map = {' ': '_', '!': '_', '*': '_', '^': '_', '%': '_', '$': '_', '&'
 config = {
     "DEBUG": True,          # some Flask specific configs
     "CACHE_TYPE": "SimpleCache",  # Flask-Caching related configs
-    "CACHE_DEFAULT_TIMEOUT": 3600
+    "CACHE_DEFAULT_TIMEOUT": 7200
 }
 app = Flask(__name__, static_folder='static')
 # tell Flask to use the above defined config
