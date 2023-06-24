@@ -36,9 +36,15 @@ character_map = {' ': '_', '!': '_', '*': '_', '^': '_', '%': '_', '$': '_', '&'
 ################################################
 
 # Start of app
-
+# cache configuration
+config = {
+    "DEBUG": True,          # some Flask specific configs
+    "CACHE_TYPE": "SimpleCache",  # Flask-Caching related configs
+    "CACHE_DEFAULT_TIMEOUT": 300
+}
 app = Flask(__name__, static_folder='static')
-
+# tell Flask to use the above defined config
+app.config.from_mapping(config)
 # Initialize Flask-Cache
 cache = Cache(app)
 
@@ -117,7 +123,7 @@ party_suggest = rec_value_getter(party_recs)
 
 # Get game names for autofill
 cursor = conn.cursor()
-cursor.execute("SELECT name from table_game_info")
+cursor.execute("SELECT name from table_game_info ORDER BY year_pub DESC")
 results = cursor.fetchall()
 name_list = [row[0] for row in results]
 cursor.close()
