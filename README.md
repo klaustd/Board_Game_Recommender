@@ -1,4 +1,4 @@
-# Board_Game_Recommender_v1.1
+# Board_Game_Recommender_v1.2
 Board game recommender using collaborative filtering
 # ###################################################
 About
