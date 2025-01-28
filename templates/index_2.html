@@ -149,15 +149,13 @@
             {% endif %}
 
             {% if error_message %}
-            {% for i in error_message %}
-                <div class="w3-container" style="margin-top:5%">
-                    <div class="card">
-                        <div class="card-body">
-                            <p style="font-size:200%">Uh oh...it looks like we have an issue..."{{ i }}" ... if you let me know what caused it I can try to fix it.</p>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+			<div class="w3-container" style="margin-top:5%">
+				<div class="card">
+					<div class="card-body">
+						<p style="font-size:200%">Uh oh...it looks like we have an issue..."{{ error_message }}" ... if you let me know what caused it I can try to fix it.</p>
+					</div>
+				</div>
+			</div>
             {% endif %}
         </div>
     <div class="w3-section w3-bottombar w3-padding-16"></div>
