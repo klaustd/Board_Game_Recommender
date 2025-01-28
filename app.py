@@ -303,6 +303,8 @@ def game_recommender():
                                   f"AND g.year_pub::numeric >= %s AND g.year_pub::numeric <= %s " \
                                   f"ORDER BY {search_type} {order} " \
                                   f"LIMIT %s"
+                                  
+                    print(query_table)
                     # Execute the query with the table name as a parameter
                     # Execute the query with the parameter values
                     if dropdown_value == 'option4':
