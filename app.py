@@ -298,13 +298,13 @@ def game_recommender():
                     # print(match_check)
                     query_table = f"SELECT g.name, g.image, g.year_pub, g.play_time, g.min_players, g.max_players, g.avg_rating, CONCAT('https://boardgamegeek.com/boardgame/',k.bggid) " \
                                   f"FROM {matched_table} m " \
-                                  f"JOIN table_game_info g ON m.id = g.id JOIN game_info_db k on g.name = k.name" \
+                                  f"JOIN table_game_info g ON m.id = g.id JOIN game_info_db k on g.name = k.name " \
                                   f"WHERE {search_type} >= %s AND g.max_players <= %s AND g.min_players >= %s " \
                                   f"AND g.year_pub::numeric >= %s AND g.year_pub::numeric <= %s " \
                                   f"ORDER BY {search_type} {order} " \
                                   f"LIMIT %s"
                                   
-                    print(query_table)
+                    #print(query_table)
                     # Execute the query with the table name as a parameter
                     # Execute the query with the parameter values
                     if dropdown_value == 'option4':
