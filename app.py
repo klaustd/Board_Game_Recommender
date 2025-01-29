@@ -106,8 +106,8 @@ def rec_value_getter(names):
     placeholders = ','.join(['%s'] * len(names))
 
     # Execute a SELECT query to fetch the table
-    query = "SELECT name, image, year_pub, play_time, min_players, max_players, avg_rating " \
-            "FROM table_game_info WHERE name IN ({}) ORDER BY year_pub DESC".format(placeholders)
+    query = "SELECT tgi.name, tgi.image, tgi.year_pub, tgi.play_time, tgi.min_players, tgi.max_players, tgi.avg_rating, CONCAT('https://boardgamegeek.com/boardgame/',gidb.bggid) " \
+            "FROM table_game_info tgi, game_info_db gidb WHERE tgi.name = gidb.name and tgi.name IN ({}) ORDER BY year_pub DESC".format(placeholders)
     cursor.execute(query, names)
     matching_games = cursor.fetchall()
 
